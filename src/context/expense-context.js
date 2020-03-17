@@ -10,17 +10,21 @@ const ExpenseProvider = props => {
       .then(response => response.json())
       .then(responseData => {
         const loadedExpenses = [];
-        for (const key in responseData) {
-          loadedExpenses.push({
-            id: key,
-            item: responseData[key].item,
-            amount: responseData[key].amount,
-            quantity: responseData[key].quantity,
-            note: responseData[key].note,
-            date: responseData[key].date,
-            paymentmode: responseData[key].paymentmode,
-            paymentstatus: responseData[key].paymentstatus
-          });
+        if (responseData) {
+          for (const key in responseData) {
+            loadedExpenses.push({
+              id: key,
+              item: responseData[key].item,
+              amount: responseData[key].amount,
+              quantity: responseData[key].quantity,
+              note: responseData[key].note,
+              date: responseData[key].date,
+              paymentmode: responseData[key].paymentmode,
+              paymentstatus: responseData[key].paymentstatus
+            });
+          }
+        } else {
+          return false;
         }
         setExpenses(loadedExpenses);
         console.log(responseData);
