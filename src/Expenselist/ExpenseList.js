@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import "./expenselist.css";
 
 import { ExpenseContext } from "../context/expense-context";
+import Search from "../Search/search";
 const ExpenseList = props => {
   console.log(props);
 
@@ -21,6 +22,7 @@ const ExpenseList = props => {
   console.log(expenses);
   return (
     <div>
+      <Search />
       <table style={{ width: "100%" }}>
         <thead>
           <tr>

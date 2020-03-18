@@ -1,9 +1,10 @@
 import React, { useState, useContext } from "react";
-
+import PropTypes from "prop-types";
 import { ExpenseContext } from "../context/expense-context";
 import "./addexpense.css";
 
 const AddExpense = props => {
+  console.log(props);
   const [item, setItem] = useState("");
   const [amount, setAmount] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -61,6 +62,7 @@ const AddExpense = props => {
             onChange={event => {
               setItem(event.target.value);
             }}
+            required
           />
         </div>
         <div>
@@ -72,6 +74,7 @@ const AddExpense = props => {
             onChange={event => {
               setAmount(event.target.value);
             }}
+            required
           />
         </div>
       </div>
@@ -96,6 +99,7 @@ const AddExpense = props => {
             onChange={event => {
               setDate(event.target.value);
             }}
+            required
           />
         </div>
       </div>
@@ -109,6 +113,7 @@ const AddExpense = props => {
             onChange={event => {
               setPaymentStatus(event.target.value);
             }}
+            required
           />
         </div>
         <div>
@@ -120,6 +125,7 @@ const AddExpense = props => {
             onChange={event => {
               setPaymentMode(event.target.value);
             }}
+            required
           />
         </div>
       </div>
