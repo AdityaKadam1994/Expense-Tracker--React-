@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import "./expenselist.css";
 
 import { ExpenseContext } from "../context/expense-context";
@@ -17,6 +18,9 @@ const ExpenseList = props => {
     ).then(response => {
       setExpenses(prevExp => prevExp.filter(item => item.id !== Expid));
     });
+  };
+  const handleSingleExpense = expenseId => {
+    console.log(expenseId);
   };
 
   console.log(expenses);
@@ -38,8 +42,12 @@ const ExpenseList = props => {
         </thead>
         <tbody>
           {expenses.map(exp => (
-            <tr key={exp.id}>
-              <td>{exp.item}</td>
+            <tr key={exp.id} onClick={() => handleSingleExpense(exp.id)}>
+              <td>
+                <Link to={"/expenses/" + exp.id} exact>
+                  {exp.item}
+                </Link>
+              </td>
               <td>{exp.amount}</td>
               <td>{exp.quantity}</td>
               <td>{exp.date}</td>

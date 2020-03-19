@@ -4,7 +4,6 @@ import { ExpenseContext } from "../context/expense-context";
 import "./addexpense.css";
 
 const AddExpense = props => {
-  console.log(props);
   const [item, setItem] = useState("");
   const [amount, setAmount] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -24,6 +23,7 @@ const AddExpense = props => {
       paymentstatus: paymentstatus,
       note: note
     };
+
     fetch("https://expense-tracker-db-9d27a.firebaseio.com/expenses.json", {
       method: "POST",
       body: JSON.stringify(expenseData),

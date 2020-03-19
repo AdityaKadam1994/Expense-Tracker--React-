@@ -6,6 +6,7 @@ import { Route } from "react-router-dom";
 import ExpenseList from "./Expenselist/ExpenseList";
 import AddExpense from "./AddExpense/AddExpense";
 import ExpenseProvider from "./context/expense-context";
+import EditExpense from "./EditExpense/EditExpense";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <div className="App">
         <Navigation />
         <main>
+          <Route path="/expenses/:id" component={EditExpense} exact />
           <Route path="/" component={ExpenseList} exact />
           <Route path="/add-expense" component={AddExpense} exact />
         </main>

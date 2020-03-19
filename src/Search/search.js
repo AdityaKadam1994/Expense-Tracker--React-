@@ -7,6 +7,14 @@ const Search = props => {
   const expRef = useRef();
   const [search, setSearch] = useState("");
   const [expenses, setExpenses] = useContext(ExpenseContext);
+  const [totalCost, setTotalCost] = useState("");
+
+  // setTimeout(() => {
+  //   Price = expenses.reduce((a, b) => {
+  //     return { pp: a.amount + b.amount };
+  //   }, 0);
+  //   console.log(setPrice);
+  // }, 2000);
 
   const onSearchHandler = query => {
     setSearch(query);
@@ -36,7 +44,8 @@ const Search = props => {
             }
             setExpenses(loadedExpenses);
           });
-      } else {
+      } else if (query.length === 0) {
+        console.log("else part executed");
         fetch(`https://expense-tracker-db-9d27a.firebaseio.com/expenses.json`)
           .then(response => response.json())
           .then(responseData => {
@@ -72,6 +81,7 @@ const Search = props => {
           onSearchHandler(event.target.value);
         }}
       />
+      <p></p>
     </div>
   );
 };

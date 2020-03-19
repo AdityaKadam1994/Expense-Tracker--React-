@@ -10,13 +10,13 @@ li {
 }
 
 
-a {
+.main-links a {
     text-decoration: none;
     color: white;
 }
 
-a:hover,
-a.active {
+.main-links a:hover,
+.main-links a.active {
     color: green;
 }
 
