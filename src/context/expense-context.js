@@ -4,6 +4,7 @@ export const ExpenseContext = React.createContext();
 
 const ExpenseProvider = props => {
   const [expenses, setExpenses] = useState([]);
+  const [addUpTotal, setAddUpTotal] = useState("");
   let totalPrice;
   const loadedExpenses = [];
   useEffect(() => {
@@ -31,14 +32,19 @@ const ExpenseProvider = props => {
       })
       .then(() => {
         console.log(loadedExpenses);
+        let cost = loadedExpenses.map(item => item.amount);
+        console.log(cost);
         totalPrice = loadedExpenses.reduce((a, b) => {
-          return a.amount + b.amount;
+          return a + parseInt(b.amount);
         }, 0);
         console.log(totalPrice);
+        setAddUpTotal(totalPrice);
       });
   }, [setExpenses]);
   return (
-    <ExpenseContext.Provider value={[expenses, setExpenses]}>
+    <ExpenseContext.Provider
+      value={[expenses, setExpenses, addUpTotal, setAddUpTotal]}
+    >
       {props.children}
     </ExpenseContext.Provider>
   );

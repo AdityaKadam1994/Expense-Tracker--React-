@@ -12,9 +12,14 @@ const EditExpense = props => {
   const [editPaymentMode, seteditPaymentMode] = useState("");
   const [editPaymentstatus, seteditPaymentStatus] = useState("");
   const [editNote, seteditNote] = useState("");
-  const [expenses, setExpenses] = useContext(ExpenseContext);
+  const [expenses, setExpenses, addUpTotal, setAddUpTotal] = useContext(
+    ExpenseContext
+  );
   const singleExpenseId = props.match.params.id;
-  console.log(singleExpenseId);
+  let filteredArray = [];
+  let filteredCost = [];
+  // console.log(singleExpenseId);
+  // console.log(props);
   useEffect(() => {
     if (singleExpenseId.length !== 0) {
       console.log("inside edit expense");
@@ -58,12 +63,16 @@ const EditExpense = props => {
         return response.json();
       })
       .then(responseData => {
-        setExpenses(prevExp => [
-          ...prevExp,
+        filteredArray = expenses.filter(expId => expId.id !== singleExpenseId);
+        console.log(filteredArray);
+        setExpenses([
+          ...filteredArray,
           { id: singleExpenseId, ...expenseData }
         ]);
       })
       .then(() => {
+        // setAddUpTotal(TotalCost[0]);
+        // console.log(`filtered cost ${TotalCost[0]}`);
         props.history.push("/");
       });
   };

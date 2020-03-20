@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./expenselist.css";
 
@@ -8,6 +8,9 @@ const ExpenseList = props => {
   console.log(props);
 
   const [expenses, setExpenses] = useContext(ExpenseContext);
+  useEffect(() => {
+    "executed";
+  }, [props]);
   const removeExpense = Expid => {
     console.log(Expid);
     fetch(
@@ -22,8 +25,18 @@ const ExpenseList = props => {
   const handleSingleExpense = expenseId => {
     console.log(expenseId);
   };
+  let filteredCost = [];
+  let TT = [];
 
   console.log(expenses);
+  filteredCost = expenses.map(item => {
+    return item.amount;
+  });
+  TT = filteredCost.reduce((a, b) => {
+    return a + b;
+  }, 0);
+
+  console.log(TT);
   return (
     <div>
       <Search />

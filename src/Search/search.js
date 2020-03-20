@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 
 import "./search.css";
 import { ExpenseContext } from "../context/expense-context";
@@ -6,16 +6,19 @@ import { ExpenseContext } from "../context/expense-context";
 const Search = props => {
   const expRef = useRef();
   const [search, setSearch] = useState("");
-  const [expenses, setExpenses] = useContext(ExpenseContext);
+  const [expenses, setExpenses, addUpTotal, setAddUpTotal] = useContext(
+    ExpenseContext
+  );
   const [totalCost, setTotalCost] = useState("");
+  console.log(addUpTotal);
+  let totalAmount;
+  const loadedExpenses = [];
 
-  // setTimeout(() => {
-  //   Price = expenses.reduce((a, b) => {
-  //     return { pp: a.amount + b.amount };
-  //   }, 0);
-  //   console.log(setPrice);
-  // }, 2000);
-
+  totalAmount = addUpTotal;
+  useEffect(() => {
+    console.log(addUpTotal);
+    totalAmount = addUpTotal;
+  }, [addUpTotal]);
   const onSearchHandler = query => {
     setSearch(query);
     setTimeout(() => {
@@ -25,7 +28,6 @@ const Search = props => {
         )
           .then(response => response.json())
           .then(responseData => {
-            const loadedExpenses = [];
             if (responseData) {
               for (const key in responseData) {
                 loadedExpenses.push({
@@ -43,13 +45,19 @@ const Search = props => {
               return false;
             }
             setExpenses(loadedExpenses);
+          })
+          .then(() => {
+            totalAmount = loadedExpenses.reduce((a, b) => {
+              return a + parseInt(b.amount);
+            }, 0);
+            console.log(totalAmount);
+            setAddUpTotal(totalAmount);
           });
       } else if (query.length === 0) {
         console.log("else part executed");
         fetch(`https://expense-tracker-db-9d27a.firebaseio.com/expenses.json`)
           .then(response => response.json())
           .then(responseData => {
-            const loadedExpenses = [];
             if (responseData) {
               for (const key in responseData) {
                 loadedExpenses.push({
@@ -67,10 +75,20 @@ const Search = props => {
               return false;
             }
             setExpenses(loadedExpenses);
+            console.log(loadedExpenses);
+          })
+          .then(() => {
+            console.log(loadedExpenses);
+            totalAmount = loadedExpenses.reduce((a, b) => {
+              return a + parseInt(b.amount);
+            }, 0);
+            console.log(totalAmount);
+            setAddUpTotal(totalAmount);
           });
       }
     }, 500);
   };
+  console.log(`last: ${totalAmount}`);
   return (
     <div className="search-wrapper">
       <input
@@ -81,7 +99,8 @@ const Search = props => {
           onSearchHandler(event.target.value);
         }}
       />
-      <p></p>
+
+      <p>Total Amount: {totalAmount ? totalAmount : "-"}</p>
     </div>
   );
 };
