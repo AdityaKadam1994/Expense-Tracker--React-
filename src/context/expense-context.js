@@ -37,7 +37,7 @@ const ExpenseProvider = props => {
         totalPrice = loadedExpenses.reduce((a, b) => {
           return a + parseInt(b.amount);
         }, 0);
-        console.log(totalPrice);
+        console.log("Contecxt Price" + totalPrice);
         setAddUpTotal(totalPrice);
       });
   }, [setExpenses]);

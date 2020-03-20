@@ -22,13 +22,11 @@ const EditExpense = props => {
   // console.log(props);
   useEffect(() => {
     if (singleExpenseId.length !== 0) {
-      console.log("inside edit expense");
       fetch(
         `https://expense-tracker-db-9d27a.firebaseio.com/expenses/${singleExpenseId}.json`
       )
         .then(response => response.json())
         .then(responseData => {
-          console.log(responseData);
           seteditItem(responseData ? responseData.item : "");
           seteditAmount(responseData ? responseData.amount : "");
           seteditQuantity(responseData ? responseData.quantity : "");
@@ -63,7 +61,10 @@ const EditExpense = props => {
         return response.json();
       })
       .then(responseData => {
-        filteredArray = expenses.filter(expId => expId.id !== singleExpenseId);
+        filteredArray = expenses.filter(expId => expId.id != singleExpenseId);
+
+        console.log("after filtering");
+        console.log(expenseData);
         console.log(filteredArray);
         setExpenses([
           ...filteredArray,
@@ -71,8 +72,9 @@ const EditExpense = props => {
         ]);
       })
       .then(() => {
-        // setAddUpTotal(TotalCost[0]);
-        // console.log(`filtered cost ${TotalCost[0]}`);
+        console.log("after editing item");
+        console.log(expenses);
+
         props.history.push("/");
       });
   };

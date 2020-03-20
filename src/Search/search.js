@@ -13,12 +13,18 @@ const Search = props => {
   console.log(addUpTotal);
   let totalAmount;
   const loadedExpenses = [];
+  let newArray = [];
+  let TC = [];
 
-  totalAmount = addUpTotal;
   useEffect(() => {
-    console.log(addUpTotal);
-    totalAmount = addUpTotal;
+    newArray = expenses.map(item => item);
+    TC = newArray.reduce((a, b) => {
+      return a + parseInt(b.amount);
+    }, 0);
+    setAddUpTotal(TC);
   }, [addUpTotal]);
+  totalAmount = addUpTotal;
+
   const onSearchHandler = query => {
     setSearch(query);
     setTimeout(() => {
